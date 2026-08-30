@@ -1,0 +1,53 @@
+# Riesgo de los scopes DELEGADOS de OAuth que una app puede recibir por consentimiento.
+#
+# EDITABLE A PROPÓSITO: el riesgo de un scope depende del contexto de la organización.
+# El campo `porque` responde la pregunta que decide el nivel: si una app maliciosa
+# obtiene ESTE consentimiento, ¿qué alcanza? Un scope no catalogado se trata como
+# 'desconocido' (no inofensivo): lo que nadie clasificó merece una mirada.
+#
+# Niveles: critico / alto / medio / bajo. (Los pesos viven en monitor/risk.py.)
+
+# ── CRÍTICO: leer y ESCRIBIR datos del usuario, o persistencia amplia ────────
+Mail.ReadWrite:
+  nivel: critico
+  porque: "Leer Y modificar el correo del usuario: borrar rastros, responder, mover."
+Mail.ReadWrite.Shared:
+  nivel: critico
+  porque: "Igual, sobre buzones compartidos a los que el usuario accede."
+Files.ReadWrite.All:
+  nivel: critico
+  porque: "Leer y escribir todos los archivos a los que el usuario accede."
+
+# ── ALTO: leer datos sensibles o enviar como el usuario ──────────────────────
+Mail.Read:
+  nivel: alto
+  porque: "Leer todo el correo del usuario. Exfiltración clásica del consentimiento ilícito."
+Mail.Send:
+  nivel: alto
+  porque: "Enviar correo COMO el usuario: phishing interno desde una cuenta legítima."
+Files.Read.All:
+  nivel: alto
+  porque: "Leer todos los archivos a los que el usuario accede."
+Contacts.Read:
+  nivel: alto
+  porque: "Leer los contactos: lista de objetivos para el siguiente salto."
+Notes.Read.All:
+  nivel: alto
+  porque: "Leer OneNote del usuario, que suele contener notas y credenciales."
+
+# ── MEDIO: metadatos amplios, o persistencia por sí sola ─────────────────────
+offline_access:
+  nivel: medio
+  porque: "Token de refresco = PERSISTENCIA. Bajo por sí solo; peligroso junto a un scope de datos."
+Directory.Read.All:
+  nivel: medio
+  porque: "Leer el directorio: reconocimiento del tenant."
+User.ReadBasic.All:
+  nivel: medio
+  porque: "Leer el perfil básico de todos los usuarios."
+
+# ── BAJO: alcance del propio usuario, identidad ──────────────────────────────
+User.Read:   { nivel: bajo, porque: "Perfil del propio usuario." }
+openid:      { nivel: bajo, porque: "Solo identidad para inicio de sesión." }
+profile:     { nivel: bajo, porque: "Datos básicos de perfil." }
+email:       { nivel: bajo, porque: "Dirección de correo del usuario." }
