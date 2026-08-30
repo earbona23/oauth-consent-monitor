@@ -1,0 +1,5 @@
+# Copiá a config.yaml (gitignored). NUNCA subas secretos.
+# App Registration con permisos de SOLO LECTURA: Directory.Read.All, User.Read.All
+tenant_id: ""
+client_id: ""
+client_secret: ""     # mejor: exportá OCM_CLIENT_SECRET
