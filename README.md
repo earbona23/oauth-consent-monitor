@@ -1,5 +1,15 @@
 # oauth-consent-monitor
 
+> **Snapshot, not maintained.** This tool works and its tests pass, but it is not under
+> active development: I am not adding features and I do not review pull requests on a
+> schedule. Issues are welcome and I do read them — a reply may take a while. Last
+> substantive change: September 2026.
+>
+> Maintained instead: [revtriage](https://github.com/earbona23/revtriage),
+> [entra-tripwire](https://github.com/earbona23/entra-tripwire),
+> [entraform](https://github.com/earbona23/entraform) and
+> [vantage](https://github.com/earbona23/vantage).
+
 **Catch the illicit consent grant — the Microsoft 365 attack where a user is tricked into
 approving a third-party app that then reads their mail and keeps a refresh token — by
 watching your tenant's OAuth consents and flagging the ones that fit the pattern.**
